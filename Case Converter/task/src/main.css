@@ -1,0 +1,14 @@
+button {
+    background-color: orange;
+    color: black;
+    margin: 5px;
+}
+
+textarea {
+    min-height: 200px;
+    min-width: 800px;
+}
+.title {
+    font-size: 2rem;
+    font-family: Arial, serif;
+}

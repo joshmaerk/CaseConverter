@@ -1,0 +1,100 @@
+type: edu
+files:
+- name: test/test.js
+  visible: false
+  text: |-
+    const path = require('path');
+    const pagePath = 'file://' + path.resolve(__dirname, '../src/index.html');
+
+    const {StageTest, correct, wrong} = require('hs-test-web');
+
+    class ConverterTest extends StageTest {
+
+        page = this.getPage(pagePath)
+
+        tests = [
+            this.page.execute(() => {
+                const nodes = document.getElementsByClassName("title");
+
+                if (nodes.length !== 1) {
+                    return wrong("There should be one element with class 'title', found " + nodes.length + "!")
+                }
+
+                const titleDiv = nodes[0];
+
+                if (titleDiv.textContent !== 'Case Converter') {
+                    return wrong("The title name should be 'Case Converter', but found " + titleDiv.textContent.trim())
+                }
+
+                return correct()
+            }),
+            this.page.execute(() => {
+                const nodes = document.getElementsByTagName("textarea");
+
+                if (nodes.length !== 1) {
+                    return wrong("There should be one 'textarea' element, found " + nodes.length + "!")
+                }
+
+                const textArea = nodes[0];
+
+                if (textArea.textContent.trim() !== '') {
+                    return wrong("TextArea should be empty by default!")
+                }
+
+                return correct()
+            }),
+            this.page.execute(() => {
+                const upperCaseButton = document.querySelector("button#upper-case")
+                const lowerCaseButton = document.querySelector("button#lower-case")
+                const properCaseButton = document.querySelector("button#proper-case")
+                const sentenceCaseButton = document.querySelector("button#sentence-case")
+
+                if (upperCaseButton === null) {
+                    return wrong("Can't find a button with '#upper-case' id!")
+                }
+
+                if (lowerCaseButton === null) {
+                    return wrong("Can't find a button with '#lower-case' id!")
+                }
+
+                if (properCaseButton === null) {
+                    return wrong("Can't find a button with '#proper-case' id!")
+                }
+
+                if (sentenceCaseButton === null) {
+                    return wrong("Can't find a button with '#sentence-case' id!")
+                }
+
+                return correct()
+            })
+        ]
+    }
+
+    it('Test stage', async function () {
+        try {
+            this.timeout(30000)
+        } catch (ignored) {
+        }
+        await new ConverterTest().runTests()
+    }, 30000)
+  learner_created: false
+- name: src/index.html
+  visible: true
+  text: |
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+    </head>
+    <body>
+
+    </body>
+    </html>
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/193/stages/962/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Wed, 06 Jul 2022 15:09:49 UTC
+record: 1
